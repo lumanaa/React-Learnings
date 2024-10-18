@@ -1,0 +1,48 @@
+body {
+  color: white;
+}
+
+.page1 {
+  background-color: rebeccapurple;
+  height: 50vh;
+  // z-index: 1;
+}
+.page15 {
+  background-color: lightcoral;
+  height: 100vh;
+}
+.page2 {
+  // z-index: 2;
+
+  background-color: lawngreen;
+  height: 400vh;
+  position: relative;
+  .com1 {
+    height: 100vh;
+    background-color: rgb(238, 170, 170);
+    z-index: 1;
+   position: sticky;
+   top: 0;
+  }
+  .com2 {
+   position: absolute;
+    height: 200vh;
+    background-color: rgb(170, 238, 177);
+ 
+  }
+}
+.page3 {
+  background-color: olivedrab;
+  height: 100vh;
+  z-index: 99999;
+  position: sticky;
+  top: 0;
+}
+.page4 {
+  background-color: teal;
+  height: 100vh;
+  z-index: 99999;
+  position: sticky;
+
+  top: 0;
+}
