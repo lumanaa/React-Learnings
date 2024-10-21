@@ -22,7 +22,7 @@ const Menu = () => {
       // Show the menu only when the user is not at the top of the page
       if (currentScrollPosition !== 0) {
         // Show the menu when the mouse is within 40px of the right edge of the window
-        if (mouseX >= window.innerWidth - 40) {
+        if (mouseX >= window.innerWidth - 70) {
           setIsHovered(true);
           setIsVisible(true); // Show menu when mouse is on the right edge
         } else {
@@ -88,6 +88,7 @@ const Menu = () => {
       x: "0vw", // Move back to the right side (off-screen)
       duration: 1, // Closing animation duration
       ease: "power2.out",
+
       onComplete: () => {
         gsap.to(".menu-svg", {
           fill: "black",
@@ -125,6 +126,7 @@ const Menu = () => {
       gsap.to(".menu", {
         duration: 0.8,
         x: 0,
+        ease:"circ.out"
       });
       gsap.to(".menu-icon", {
         fill: "black",
