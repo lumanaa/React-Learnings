@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useGSAP } from "@gsap/react";
 import img1 from "../../assets/eight.jpg";
 import img2 from "../../assets/one.jpg";
-import img3 from "../../assets/seven.jpg";
+import img3 from "../../assets/nine.jpg";
+import gsap from "gsap";
+import { useContext, useRef, useState } from "react";
+import { CursorContext } from "../CustomeCursor/CursorManager";
 
 const images = [img1, img2, img3];
 
@@ -10,16 +13,31 @@ interface GalleryItemProps {
 }
 
 const GalleryItem = ({ img }: GalleryItemProps) => {
-  const [reveal, setReveal] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const mouseContext = useContext(CursorContext);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setReveal(true);
-    }, 100);
+  const [clipMaskRadius, setClipMaskRadius] = useState(0);
+  const [clipMask, setClipMask] = useState({ x: 0, y: 0 });
+
+  useGSAP(() => {
+    gsap.set(".gallery-item-wrapper", {
+      paddingTop: "600px", // Correct property notation
+    });
+
+    gsap.to(".gallery-item-wrapper", {
+      paddingTop: "0px", // Transition padding-top from 200px to 0px
+      ease: "power2.out",
+      stagger: 0.2, // Delay between animations for multiple items
+    });
   }, []);
 
   return (
-    <div className={`gallery-item-wrapper ${reveal ? "is-reveal" : ""}`}>
+    <div
+      className='gallery-item-wrapper'
+      ref={ref}
+      onMouseEnter={() => mouseContext?.setSize("hide")} // Set size to hide on mouse enter
+      onMouseLeave={() => mouseContext?.setSize("small")} // Set size to small on mouse leave
+    >
       <div className='gallery-item'>
         <div
           className='gallery-item-img sepia'

@@ -5,6 +5,13 @@
   scroll-behavior: smooth;
 }
 
+
+html, body {
+  &, * {
+    cursor: none;
+  }
+}
+
 body {
   color: black;
   background-color: #1a1a1a;

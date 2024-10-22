@@ -15,16 +15,9 @@
   }
   .gallery-item-wrapper {
     transform: scale(1);
+    overflow: hidden; 
     transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
-    &.is-reveal {
-      @for $i from 1 through 3 {
-        @for $i from 1 through 3 {
-          &:nth-child(#{$i}) .gallery-item {
-            transition-delay: #{$i * 0.1}s !important; // Adjusting delay
-          }
-        }
-      }
-    }
+
     .gallery-item {
       clip-path: inset(0% 0% 0% 0%);
     }

@@ -1,0 +1,23 @@
+.app-cursor {
+  z-index: 1000;
+  border-radius: 50%;
+  width: 80px; /* Cursor size */
+  height: 80px; /* Cursor size */
+  border: 1px solid black;
+  pointer-events: none; /* Prevent cursor from blocking mouse events */
+  transform: translate3d(0, 0, 0);
+  position: fixed;
+  top: 0; /* Start position */
+  left: 0; /* Start position */
+  background-color: rgb(147, 99, 211);
+  transition: width 0.25s ease-in-out, height 0.25s ease-in-out;
+  &.small {
+    width: 60px;
+    height: 60px;
+  }
+  &.hide {
+    width: 0;
+    height: 0;
+    transform-origin: center;
+  }
+}
