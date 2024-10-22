@@ -3,7 +3,7 @@ import img1 from "../../assets/eight.jpg";
 import img2 from "../../assets/one.jpg";
 import img3 from "../../assets/nine.jpg";
 import gsap from "gsap";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CursorContext } from "../CustomeCursor/CursorManager";
 
 const images = [img1, img2, img3];
@@ -29,6 +29,32 @@ const GalleryItem = ({ img }: GalleryItemProps) => {
       ease: "power2.out",
       stagger: 0.2, // Delay between animations for multiple items
     });
+  }, []);
+
+  useEffect(() => {
+    function handleMouseMove(event: MouseEvent) {
+      const { clientX, clientY } = event;
+      const imagePosition = {
+        posX: ref.current?.offsetLeft || 0,
+        posY: ref.current?.offsetTop || 0,
+      };
+      const posX = clientX - imagePosition.posX;
+      const posY = clientY - imagePosition.posY;
+
+      setClipMask({
+        x: (posX / ref.current?.clientWidth) * 100,
+        y: (posY / ref.current?.clientHeight) * 100,
+      });
+
+      console.log(`X : ${clientX}, Y: ${clientY}`);
+    }
+
+    const currentRef = ref.current;
+
+    currentRef?.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      currentRef?.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   return (
