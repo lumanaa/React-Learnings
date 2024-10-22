@@ -16,42 +16,41 @@ const GalleryItem = ({ img }: GalleryItemProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const mouseContext = useContext(CursorContext);
 
-  const [clipMaskRadius, setClipMaskRadius] = useState(0);
-  const [clipMask, setClipMask] = useState({ x: 0, y: 0 });
+  const [clipMaskRadius, setClipMaskRadius] = useState(0); // Adjust this for initial masking
+  const [clipMask, setClipMask] = useState({ x: 50, y: 50 });
 
   useGSAP(() => {
     gsap.set(".gallery-item-wrapper", {
-      paddingTop: "600px", // Correct property notation
+      paddingTop: "600px",
     });
 
     gsap.to(".gallery-item-wrapper", {
-      paddingTop: "0px", // Transition padding-top from 200px to 0px
+      paddingTop: "0px",
       ease: "power2.out",
-      stagger: 0.2, // Delay between animations for multiple items
+      stagger: 0.2,
     });
   }, []);
 
   useEffect(() => {
-    function handleMouseMove(event: MouseEvent) {
+    const handleMouseMove = (event: MouseEvent) => {
       const { clientX, clientY } = event;
-      const imagePosition = {
-        posX: ref.current?.offsetLeft || 0,
-        posY: ref.current?.offsetTop || 0,
-      };
-      const posX = clientX - imagePosition.posX;
-      const posY = clientY - imagePosition.posY;
+      const imagePosition = ref.current?.getBoundingClientRect();
 
-      setClipMask({
-        x: (posX / ref.current?.clientWidth) * 100,
-        y: (posY / ref.current?.clientHeight) * 100,
-      });
+      if (imagePosition) {
+        const posX = clientX - imagePosition.left;
+        const posY = clientY - imagePosition.top;
 
-      console.log(`X : ${clientX}, Y: ${clientY}`);
-    }
+        // Update clip mask coordinates
+        setClipMask({
+          x: (posX / imagePosition.width) * 100,
+          y: (posY / imagePosition.height) * 100,
+        });
+      }
+    };
 
     const currentRef = ref.current;
-
     currentRef?.addEventListener("mousemove", handleMouseMove);
+
     return () => {
       currentRef?.removeEventListener("mousemove", handleMouseMove);
     };
@@ -61,20 +60,25 @@ const GalleryItem = ({ img }: GalleryItemProps) => {
     <div
       className='gallery-item-wrapper'
       ref={ref}
-      onMouseEnter={() => mouseContext?.setSize("hide")} // Set size to hide on mouse enter
-      onMouseLeave={() => mouseContext?.setSize("small")} // Set size to small on mouse leave
+      onMouseEnter={() => {
+        setClipMaskRadius(25);
+        mouseContext?.setSize("hide");
+      }}
+      onMouseLeave={() => {
+        setClipMaskRadius(0);
+        mouseContext?.setSize("small");
+      }}
     >
       <div className='gallery-item'>
         <div
           className='gallery-item-img sepia'
-          style={{
-            backgroundImage: `url(${img})`,
-          }}
+          style={{ backgroundImage: `url(${img})` }}
         ></div>
         <div
           className='gallery-item-img masked'
           style={{
             backgroundImage: `url(${img})`,
+            clipPath: `circle(${clipMaskRadius}% at ${clipMask.x}% ${clipMask.y}%)`,
           }}
         ></div>
       </div>
