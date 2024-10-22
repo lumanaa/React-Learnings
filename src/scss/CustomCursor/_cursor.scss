@@ -3,21 +3,32 @@
   border-radius: 50%;
   width: 80px; /* Cursor size */
   height: 80px; /* Cursor size */
-  border: 1px solid black;
   pointer-events: none; /* Prevent cursor from blocking mouse events */
   transform: translate3d(0, 0, 0);
   position: fixed;
   top: 0; /* Start position */
   left: 0; /* Start position */
-  background-color: rgb(147, 99, 211);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    150deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(103, 9, 121, 1) 50%,
+    rgba(255, 0, 0, 1) 200%
+  );
   transition: width 0.25s ease-in-out, height 0.25s ease-in-out;
+
+  /* Add glow effect */
+  box-shadow: 0 0 20px rgba(228, 55, 121, 0.603), 0 0 30px rgba(160, 59, 255, 0.664);
+
   &.small {
     width: 60px;
     height: 60px;
   }
+
   &.hide {
     width: 0;
     height: 0;
     transform-origin: center;
+    box-shadow: none; /* Remove shadow when hidden */
   }
 }
