@@ -4,6 +4,8 @@ import gsap from "gsap";
 import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 
+gsap.registerPlugin(useGSAP);
+
 const Menu = () => {
   const [isOverlayOpen, setOverlayOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -83,7 +85,7 @@ const Menu = () => {
     setIsVisible(false);
     setTimeout(() => {
       setOverlayOpen(false); // Change state after the animation is done
-    }, 490);
+    }, 520);
     gsap.to(".overlay", {
       x: "0vw", // Move back to the right side (off-screen)
       duration: 1, // Closing animation duration
@@ -126,7 +128,7 @@ const Menu = () => {
       gsap.to(".menu", {
         duration: 0.8,
         x: 0,
-        ease:"circ.out"
+        ease: "circ.out",
       });
       gsap.to(".menu-icon", {
         fill: "black",
@@ -158,7 +160,11 @@ const Menu = () => {
 
   return (
     <>
-      <div className={`menu ${isVisible && isHovered ? "visible" : "hidden"}`}>
+      <div
+        className={`menu ${
+          isOverlayOpen || (isVisible && isHovered) ? "visible" : "hidden"
+        }`}
+      >
         <svg
           width='50'
           height='600'
@@ -187,14 +193,14 @@ const Menu = () => {
       {isOverlayOpen && (
         <div className='overlay'>
           <svg
-            viewBox='0 0 1000 1000'
+            viewBox='0 0 1300 1000'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
             <path
               fill-rule='evenodd'
               clip-rule='evenodd'
-              d='M171.542 0H334.23H1164.27H2437V1024H334.23V1023.18H35.4155V982.254H76.3639V961.79H0V920.863L35.4155 920.863V879.936H61.9762V839.009H108.458V798.082H61.9762V757.154H12.1737V716.227H49.8025V675.3H12.1737V634.373H49.8025V593.445H92.9643V552.518H132.807V511.591H108.458V470.664H76.3639V429.736H35.4155V388.809H76.3639V347.882H334.23V347.881H49.8025V306.954H92.9643V266.027H132.807V225.1H334.23V225.1H171.542V204.637H108.458V163.709H334.23V163.709H49.8025V122.782L92.9643 122.782V81.8545L132.807 81.8545V40.9272L171.542 40.9273V0Z'
+              d='M122.487 0H2740.03V25V50V75V100V125V150V175V200V225V250V275V300V325V350V375V400V425V450V475V500V525V550V575V600V625V650V675V700V725V750V775V800V825V850V875V900V925V950V975V1000V1025H153.108V1000H459.325V975H61.2433V950H214.352V925H139.635V900H367.46V875H260.897V850H324.59V825H139.635V800H459.325V775H69.8174V750H91.865V725H260.897V700H336.838V675H398.082V650H416.455V625H520.568V600H69.8174V575H306.217V550H398.082V525H139.635V500H336.838V475H306.217V450H244.973V425H367.46V400H214.352V375H100.439V350H172.706V325H139.635V300H100.439V275H61.2433V250H30.6217V225H107.788V200H183.73V175H153.108V150H0V125H91.865V100H61.2433V75H30.6217V50H69.8174V25H122.487V0Z'
               fill='#1E1E1E'
             />
           </svg>
