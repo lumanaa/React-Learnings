@@ -143,7 +143,7 @@ const Menu = () => {
   }, [isOverlayOpen]);
 
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && !isOverlayOpen) {
       gsap.to(".menu", {
         x: 0,
         duration: 0.3,
