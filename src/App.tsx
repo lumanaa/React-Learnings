@@ -15,7 +15,7 @@ const App = () => {
       </section>
       <section className='about'>
         <div className='about-img'>
-          <img src={aboutImg} alt='' />
+          <img src={img3} alt='' />
         </div>
         <div className='about-copy'>
           <h1>League of Legends - Arcane</h1>
